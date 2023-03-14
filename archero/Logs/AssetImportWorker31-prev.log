@@ -11,19 +11,19 @@ C:\Program Files\Unity\Hub\Editor\2020.3.19f1\Editor\Unity.exe
 -name
 AssetImportWorker31
 -projectPath
-C:/Users/asus/archero
+C:/Users/asus/Archero_Unity_testTask2/archero
 -logFile
 Logs/AssetImportWorker31.log
 -srvPort
-51410
-Successfully changed project path to: C:/Users/asus/archero
-C:/Users/asus/archero
+59039
+Successfully changed project path to: C:/Users/asus/Archero_Unity_testTask2/archero
+C:/Users/asus/Archero_Unity_testTask2/archero
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 249.96 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 204.14 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.19f1 (68f137dc9bbe)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.19f1/Editor/Data/Resources/UnitySubsystems
-[Subsystems] Discovering subsystems at path C:/Users/asus/archero/Assets
+[Subsystems] Discovering subsystems at path C:/Users/asus/Archero_Unity_testTask2/archero/Assets
 GfxDevice: creating device client; threaded=0
 Direct3D:
     Version:  Direct3D 11.0 [level 11.1]
@@ -35,5 +35,5 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.19f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.19f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.19f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56432
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56280
 Begin MonoManager ReloadAssembly
