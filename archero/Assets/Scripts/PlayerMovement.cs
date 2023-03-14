@@ -16,11 +16,13 @@ public class PlayerMovement : MonoBehaviour
     private float smoothMoveVelocity;
     
     private Rigidbody rb;
+    private PlayerShoot playerShoot;
 
     private Transform target;
     public Transform GetTarget => target;
 
     private Vector3 direction;
+    private Vector3 directionToTarget;
     private Vector3 velocity;
 
     public Vector3 GetDirection => direction;
@@ -28,37 +30,34 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
+        playerShoot = gameObject.GetComponent<PlayerShoot>();
     }
 
 
     void Update()
     {
         direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0 ,Input.GetAxisRaw("Vertical")).normalized;
-
-        float inputMagmitude = direction.magnitude;
-        smoothInputMagnitude = Mathf.SmoothDamp(smoothInputMagnitude, inputMagmitude, ref smoothMoveVelocity, smoothMoveTime); 
-
-        float targetAngle = Mathf.Atan2(direction.x, direction.z)*Mathf.Rad2Deg;
-        rotateAngle = Mathf.LerpAngle(rotateAngle, targetAngle, turnSpeed*Time.deltaTime*inputMagmitude); 
-
-        velocity = transform.forward*moveSpeed*smoothInputMagnitude;
-    }
-
-    private void FixedUpdate() {    
         target = GetClosestEnemy(enemiesManager.GetEnemies);
         if(target!=null && direction==Vector3.zero){
-            Vector3 _direction = (target.position - transform.position).normalized;
-            float inputMagmitude = _direction.magnitude;
-            smoothInputMagnitude = Mathf.SmoothDamp(smoothInputMagnitude, inputMagmitude, ref smoothMoveVelocity, smoothMoveTime); 
-            float targetAngle = Mathf.Atan2(_direction.x, _direction.z)*Mathf.Rad2Deg;
-            rotateAngle = Mathf.LerpAngle(rotateAngle, targetAngle, turnSpeed*Time.deltaTime*inputMagmitude); 
-            rb.MoveRotation(Quaternion.Euler(Vector3.up*rotateAngle));
-            rb.MovePosition(rb.position);
+            directionToTarget = (target.position - transform.position).normalized;
+            GetRotationToDirection(directionToTarget);
         }
         else {
-            rb.MoveRotation(Quaternion.Euler(Vector3.up*rotateAngle));
-            rb.MovePosition(rb.position+velocity*Time.deltaTime);
+            GetRotationToDirection(direction);
+            velocity = transform.forward*moveSpeed*smoothInputMagnitude;
         }
+    }
+
+    private void FixedUpdate() { 
+        rb.MoveRotation(Quaternion.Euler(Vector3.up*rotateAngle));
+        if(direction!=Vector3.zero) rb.MovePosition(rb.position+velocity*Time.deltaTime);
+    }
+
+    private void GetRotationToDirection(Vector3 _direction){
+        float inputMagmitude = _direction.magnitude;
+        smoothInputMagnitude = Mathf.SmoothDamp(smoothInputMagnitude, inputMagmitude, ref smoothMoveVelocity, smoothMoveTime); 
+        float targetAngle = Mathf.Atan2(_direction.x, _direction.z)*Mathf.Rad2Deg;
+        rotateAngle = Mathf.LerpAngle(rotateAngle, targetAngle, turnSpeed*Time.deltaTime*inputMagmitude);
     }
 
     private Transform GetClosestEnemy(List<Enemy> _enemies){
@@ -66,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
         Transform currentTarget = null;
         for (int i = 0; i < _enemies.Count; i++) {
             float dist = Vector3.Distance(transform.position, _enemies[i].transform.position);
-            if (dist<targetDist){
+            if (dist<targetDist && dist<playerShoot.GetDistanceToShoot){
                 targetDist = dist;
                 currentTarget = _enemies[i].transform;
             }

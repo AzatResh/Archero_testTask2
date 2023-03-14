@@ -8,17 +8,19 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private BulletProjectile bullet;
 
     [SerializeField] private float fireRate = 2;
+    [SerializeField] private float distanceCanShoot = 5;
     private float currentShootTime;
 
     private PlayerMovement playerMovement;
     private Transform target;
     
+    public float GetDistanceToShoot => distanceCanShoot;
+
     void Start()
     {
         playerMovement = gameObject.GetComponent<PlayerMovement>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(playerMovement.GetDirection!=Vector3.zero || playerMovement.GetTarget==null) {

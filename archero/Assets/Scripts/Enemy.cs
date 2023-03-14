@@ -6,8 +6,11 @@ using System;
 public class Enemy : MonoBehaviour
 {
     public static Action<Enemy> removeEnemyFromList;
+
     [SerializeField] private int MaxHealth = 10;
     private int currentHealth;
+
+    [SerializeField] private ParticleSystem particleSystem;
 
     private void Start() {
         currentHealth = MaxHealth;
@@ -22,6 +25,8 @@ public class Enemy : MonoBehaviour
         if(currentHealth>0) return;
         
         removeEnemyFromList?.Invoke(this);
+        ParticleSystem new_particle = Instantiate(particleSystem, transform.position, Quaternion.identity);
+        new_particle.Play();
         Destroy(gameObject);
     }
 }

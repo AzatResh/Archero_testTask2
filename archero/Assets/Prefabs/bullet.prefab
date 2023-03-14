@@ -127,3 +127,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 30
   damage: 2
+  particle: {fileID: 8736350094464546582, guid: 009f3bc0919359647853efdfcd6ab877, type: 3}

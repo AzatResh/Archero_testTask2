@@ -7,6 +7,7 @@ public class BulletProjectile : MonoBehaviour
 {
     [SerializeField] private float bulletSpeed = 2;
     [SerializeField] private int damage = 2;
+    [SerializeField] private ParticleSystem particle;
     
     private Rigidbody rb;
 
@@ -19,11 +20,17 @@ public class BulletProjectile : MonoBehaviour
         Enemy _enemy;
         if(other.TryGetComponent<Enemy>(out _enemy)){
             _enemy.TakeDamage(damage);
-            Destroy(gameObject);
+            ObstacleTrigger();
         }
 
         if(other.tag == "Wall"){
-            Destroy(gameObject);
+            ObstacleTrigger();
         }
+    }
+
+    private void ObstacleTrigger(){
+        ParticleSystem new_particle = Instantiate(particle, transform.position, Quaternion.identity);
+        new_particle.Play();
+        Destroy(gameObject);
     }
 }
